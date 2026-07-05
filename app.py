@@ -36,9 +36,9 @@ TEXT = {
         "prob_chart": "Class Probabilities",
         "prob_table": "Detailed Probabilities & Report",
         "analyzing": "Analyzing image...",
-        "download": "📥 Download CSV Report",
-        "about": "ℹ️ About AgriScan",
-        "about_desc": "This AI tool uses a ResNeSt50d model to classify invasive weed species with high accuracy."
+        "download": "Download CSV Report",
+        "about": "About AgriScan",
+        "about_desc": "This AI tool uses a ResNeSt50d model to classify invasive deepweed species with high accuracy."
     },
     "bn": {
         "title": "অ্যাগ্রিস্ক্যান: ইন্টারঅ্যাকটিভ ওয়েব অ্যাপ",
@@ -49,8 +49,8 @@ TEXT = {
         "prob_chart": "বিভিন্ন শ্রেণির সম্ভাবনা",
         "prob_table": "বিস্তারিত সম্ভাবনার তালিকা ও রিপোর্ট",
         "analyzing": "ছবি বিশ্লেষণ করা হচ্ছে...",
-        "download": "📥 রিপোর্ট ডাউনলোড করুন (CSV)",
-        "about": "ℹ️ অ্যাগ্রিস্ক্যান সম্পর্কে",
+        "download": "রিপোর্ট ডাউনলোড করুন (CSV)",
+        "about": "অ্যাগ্রিস্ক্যান সম্পর্কে",
         "about_desc": "এই এআই টুলটি একটি ResNeSt50d মডেল ব্যবহার করে অত্যন্ত নিখুঁতভাবে ক্ষতিকর আগাছা শনাক্ত করতে পারে।"
     }
 }
@@ -58,7 +58,7 @@ TEXT = {
 # -------------------------------
 # 2. Page Config
 # -------------------------------
-st.set_page_config(page_title="AgriScan — Interactive Web App", layout="wide", page_icon="🌿")
+st.set_page_config(page_title="AgriScan — Interactive Web App", layout="wide")
 
 # -------------------------------
 # 3. Sidebar (Controls & Info)
@@ -138,7 +138,7 @@ if uploaded_file is not None:
     # --- 1. Top Result Banner ---
     st.markdown(f"""
         <div style="background-color:#1e4620;padding:20px;border-radius:10px;margin-bottom:20px;text-align:center;">
-            <h2 style="color:white;margin:0">🌿 {T["predicted"]}: {label}</h2>
+            <h2 style="color:white;margin:0">{T["predicted"]}: {label}</h2>
             <h4 style="color:#a7f3d0;margin:5px 0 0 0">{T["confidence"]}: {pred_prob:.2f}%</h4>
         </div>
     """, unsafe_allow_html=True)
