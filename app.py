@@ -27,8 +27,7 @@ def get_model_path(filename):
     return hf_hub_download(repo_id=REPO_ID, filename=filename)
 
 MODEL_OPTIONS = {
-    "ResNeSt50d": get_model_path("resnest50d_model.pth"),
-    "ECA-ResNet50d": get_model_path("ecaresnet50d_model.pth"),
+    "ResNeSt50d": get_model_path("resnest50d_model.pth")
 }
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
