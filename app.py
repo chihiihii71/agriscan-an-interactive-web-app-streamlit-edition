@@ -64,7 +64,7 @@ st.set_page_config(page_title="AgriScan — Interactive Web App", layout="wide")
 # 3. Sidebar (Controls & Info)
 # -------------------------------
 lang = st.sidebar.radio(
-    "🌐 ভাষা / Language",
+    "ভাষা / Language",
     options=["বাংলা (Banglish)", "English"],
     index=0
 )
