@@ -80,7 +80,7 @@ TEXT = {
 # -------------------------------
 # 3. Sidebar & Model Loading
 # -------------------------------
-lang = st.sidebar.radio("🌐 Language", options=["English", "বাংলা (Banglish)"], index=0)
+lang = st.sidebar.radio("Language", options=["English", "বাংলা (Banglish)"], index=0)
 lang_code = "bn" if lang == "বাংলা (Banglish)" else "en"
 T = TEXT[lang_code]
 CLASSES = CLASS_NAMES[lang_code]
