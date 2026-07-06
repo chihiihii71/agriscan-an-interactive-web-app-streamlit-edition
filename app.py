@@ -15,30 +15,42 @@ REPO_ID = "Jaoooooo9/agriscan-streamlit"
 
 CLASS_NAMES = {
     "en": [
-        "Chinee Apple", "Lantana", "Parkinsonia",
-        "Parthenium", "Prickly Acacia", "Rubber Vine",
-        "Siam Weed", "Snake Weed", "Negative"
+        "DeepWeeds (Chinee Apple)", 
+        "DeepWeeds (Lantana)", 
+        "DeepWeeds (Parkinsonia)", 
+        "DeepWeeds (Parthenium)", 
+        "DeepWeeds (Prickly Acacia)", 
+        "DeepWeeds (Rubber Vine)", 
+        "DeepWeeds (Siam Weed)", 
+        "DeepWeeds (Snake Weed)", 
+        "Not DeepWeeds (Negative)"
     ],
     "bn": [
-        "চিনি অ্যাপল", "ল্যান্টানা", "পার্কিনসোনিয়া",
-        "পার্থেনিয়াম", "প্রিকলি একাশিয়া", "রাবার ভাইন",
-        "সিয়াম উইড", "স্নেক উইড", "নেগেটিভ"
+        "আগাছা (চিনি অ্যাপল)", 
+        "আগাছা (ল্যান্টানা)", 
+        "আগাছা (পার্কিনসোনিয়া)", 
+        "আগাছা (পার্থেনিয়াম)", 
+        "আগাছা (প্রিকলি অ্যাকাসিয়া)", 
+        "আগাছা (রাবার ভাইন)", 
+        "আগাছা (সিয়াম উইড)", 
+        "আগাছা (স্নেক উইড)", 
+        "আগাছা নয় (নেগেটিভ)"
     ]
 }
 
 TEXT = {
     "en": {
         "title": "AgriScan : Interactive Web App",
-        "subtitle": "Upload a weed image to identify its species and class probabilities.",
+        "subtitle": "Upload a DeepWeeds image to identify its species and class probabilities.",
         "upload": "Upload an image",
-        "predicted": "Predicted Class",
-        "confidence": "Confidence",
+        "predicted": "Detected Species",
+        "confidence": "AI Confidence",
         "prob_chart": "Class Probabilities",
         "prob_table": "Detailed Probabilities & Report",
         "analyzing": "Analyzing image...",
         "download": "Download CSV Report",
         "about": "About AgriScan",
-        "about_desc": "This AI tool uses a ResNeSt50d model to classify invasive deepweed species with high accuracy."
+        "about_desc": "This AI tool uses a ResNeSt50d model to classify invasive DeepWeeds species with high accuracy."
     },
     "bn": {
         "title": "অ্যাগ্রিস্ক্যান: ইন্টারঅ্যাকটিভ ওয়েব অ্যাপ",
@@ -143,18 +155,17 @@ if uploaded_file is not None:
         </div>
     """, unsafe_allow_html=True)
 
-    # --- 2. Side-by-Side Image & Chart (Forces single-screen view) ---
-    col_img, col_chart = st.columns([1, 1.2]) # Adjusts width ratio
+    # --- 2. Side-by-Side Image & Chart ---
+    col_img, col_chart = st.columns([1, 1.2])
 
     with col_img:
         st.image(image, use_container_width=True, caption=label)
 
     with col_chart:
         st.markdown(f"**{T['prob_chart']}**")
-        # Polished Plotly Chart
         fig = px.bar(
             df, x="Class", y="Probability", 
-            text_auto='.1f', # Shows numbers directly on the bars
+            text_auto='.1f',
             color="Probability", 
             color_continuous_scale="Greens"
         )
@@ -162,7 +173,7 @@ if uploaded_file is not None:
             xaxis_tickangle=-45, 
             showlegend=False, 
             coloraxis_showscale=False,
-            margin=dict(l=0, r=0, t=10, b=0), # Removes empty space around chart
+            margin=dict(l=0, r=0, t=10, b=0),
             height=350
         )
         st.plotly_chart(fig, use_container_width=True)
@@ -175,9 +186,8 @@ if uploaded_file is not None:
             st.dataframe(df_sorted.style.format({"Probability": "{:.2f}%"}), use_container_width=True)
             
         with col_btn:
-            st.write("") # Spacing
-            st.write("") # Spacing
-            # Create downloadable CSV
+            st.write("") 
+            st.write("") 
             csv = df_sorted.to_csv(index=False).encode('utf-8')
             st.download_button(
                 label=T["download"],
@@ -186,4 +196,3 @@ if uploaded_file is not None:
                 mime="text/csv",
                 use_container_width=True
             )
-
