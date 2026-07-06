@@ -26,8 +26,34 @@ CLASS_NAMES = {
     ]
 }
 
-# ... (Keep your existing TEXT dictionary here) ...
-# (Assuming your TEXT dictionary is unchanged from your previous code)
+TEXT = {
+    "en": {
+        "title": "AgriScan : Interactive Web App",
+        "subtitle": "Upload a DeepWeeds image to identify its species and class probabilities.",
+        "upload": "Upload an image",
+        "predicted": "Detected Species",
+        "confidence": "AI Confidence",
+        "prob_chart": "Class Probabilities",
+        "prob_table": "Detailed Probabilities & Report",
+        "analyzing": "Analyzing image...",
+        "download": "Download CSV Report",
+        "about": "About AgriScan",
+        "about_desc": "This AI tool uses a ResNeSt50d model to classify invasive DeepWeeds species with high accuracy."
+    },
+    "bn": {
+        "title": "অ্যাগ্রিস্ক্যান: ইন্টারঅ্যাকটিভ ওয়েব অ্যাপ",
+        "subtitle": "আগাছা শনাক্ত করতে একটি ছবি আপলোড করুন এবং এর প্রজাতি ও নিশ্চয়তার মাত্রা দেখুন।",
+        "upload": "ছবি আপলোড করুন",
+        "predicted": "শনাক্তকৃত প্রজাতি",
+        "confidence": "নিশ্চয়তার মাত্রা",
+        "prob_chart": "বিভিন্ন শ্রেণির সম্ভাবনা",
+        "prob_table": "বিস্তারিত সম্ভাবনার তালিকা ও রিপোর্ট",
+        "analyzing": "ছবি বিশ্লেষণ করা হচ্ছে...",
+        "download": "রিপোর্ট ডাউনলোড করুন (CSV)",
+        "about": "অ্যাগ্রিস্ক্যান সম্পর্কে",
+        "about_desc": "এই এআই টুলটি একটি ResNeSt50d মডেল ব্যবহার করে অত্যন্ত নিখুঁতভাবে ক্ষতিকর আগাছা শনাক্ত করতে পারে।"
+    }
+}
 
 # -------------------------------
 # 2. Page Config
@@ -35,15 +61,13 @@ CLASS_NAMES = {
 st.set_page_config(page_title="AgriScan", layout="wide")
 
 # -------------------------------
-# 3. Model Loading (Fixed to be more robust)
+# 3. Model Loading
 # -------------------------------
 @st.cache_resource
 def load_model():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model_path = hf_hub_download(repo_id=REPO_ID, filename="resnest50d_model.pth")
-    # Load model architecture
     model = timm.create_model("resnest50d", pretrained=False, num_classes=NUM_CLASSES)
-    # Load weights with strict=False to avoid minor key mismatch errors
     state_dict = torch.load(model_path, map_location=device)
     model.load_state_dict(state_dict, strict=False)
     model.to(device)
@@ -79,8 +103,14 @@ lang_code = "bn" if lang == "বাংলা (Banglish)" else "en"
 T = TEXT[lang_code]
 CLASSES = CLASS_NAMES[lang_code]
 
+st.sidebar.markdown("---")
+st.sidebar.subheader(T["about"])
+st.sidebar.info(T["about_desc"])
+
 # Main Area
 st.title(T["title"])
+st.write(T["subtitle"])
+
 uploaded_file = st.file_uploader(T["upload"], type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
@@ -90,11 +120,10 @@ if uploaded_file is not None:
     # Top Banner
     st.markdown(f"### {T['predicted']}: {label}")
     
-    # Two Columns with fixed ratio
+    # Two Columns
     col1, col2 = st.columns([1, 1])
     
     with col1:
-        # Use native image sizing instead of CSS hacks
         st.image(image, use_container_width=True)
         
     with col2:
