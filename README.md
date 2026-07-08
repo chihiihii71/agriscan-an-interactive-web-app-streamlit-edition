@@ -793,17 +793,6 @@ If you use this repository, the trained models, or the accompanying methodology 
 }
 ```
 
----
-
-# 📜 License
-
-This project is released under the **MIT License**.
-
-You are free to use, modify, and distribute this software for academic and research purposes in accordance with the terms of the license.
-
-See the `LICENSE` file for additional details.
-
----
 
 # 👨‍💻 Authors
 
