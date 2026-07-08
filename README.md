@@ -8,9 +8,10 @@
 
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)]()
 [![PyTorch](https://img.shields.io/badge/PyTorch-Deep%20Learning-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)]()
-[![Streamlit](https://img.shields.io/badge/Streamlit-Web%20Dashboard-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)]()
-[![Flask](https://img.shields.io/badge/Flask-Web%20Application-000000?style=for-the-badge&logo=flask&logoColor=white)]()
-[![HuggingFace](https://img.shields.io/badge/HuggingFace-Model%20Hosting-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black)]()
+[![Streamlit](https://img.shields.io/badge/Streamlit-Web%20Dashboard-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://agriscan-deepweeds-deploy.streamlit.app/)
+[![Flask](https://img.shields.io/badge/Flask-Web%20Application-000000?style=for-the-badge&logo=flask&logoColor=white)](https://huggingface.co/spaces/Jaoooooo9/agriscan-interactive-web-app-flask-edition)
+[![HuggingFace](https://img.shields.io/badge/HuggingFace-Model%20Hosting-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black)](Jaoooooo9/agriscan-interactive-web-app-flask-edition)
+[![IEEE](https://img.shields.io/badge/Flask-Web%20Application-000000?style=for-the-badge&logo=flask&logoColor=white)](https://ieeexplore.ieee.org/abstract/document/11545838))
 
 </div>
 
@@ -23,8 +24,8 @@ AgriScan is available through two independent deployment platforms designed for 
 | Application | Purpose | Link |
 |-------------|---------|------|
 | 🎛️ **Streamlit Dashboard** | Research dashboard with bilingual interface, probability visualization, and CSV export | **Open Streamlit App** |
-| 📱 **Flask Web Application** | Mobile-friendly field application with live camera capture | **Open Flask App** |
-| 📄 **IEEE Publication** | Published conference paper describing the comparative study | **DOI: 10.1109/QPAIN69676.2026.11545838** |
+| 📱 **Flask Web Application** | Mobile-friendly field application with live camera capture | **Open Flask App (https://huggingface.co/spaces/Jaoooooo9/agriscan-interactive-web-app-flask-edition)** |
+| 📄 **IEEE Publication** | Published conference paper describing the comparative study | **DOI: 10.1109/QPAIN69676.2026.11545838 ([https://ieeexplore.ieee.org/abstract/document/11545838))](https://doi.org/10.1109/QPAIN69676.2026.11545838)** |
 
 <div align="center">
 
