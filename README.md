@@ -16,9 +16,9 @@
 
 </div>
 
-
----
 </div>
+---
+
 # 📄 Publication
 
 The research presented in this repository has been published in an IEEE international conference, 2026 IEEE 2nd International Conference on Quantum Photonics, Artificial Intelligence & Networking (QPAIN), 16-18 April 2026.
