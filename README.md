@@ -9,7 +9,6 @@
 
 [![Streamlit](https://img.shields.io/badge/Streamlit-Web%20Dashboard-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://agriscan-deepweeds-deploy.streamlit.app/)
 [![Flask](https://img.shields.io/badge/Flask-Web%20Application-000000?style=for-the-badge&logo=flask&logoColor=white)](https://huggingface.co/spaces/Jaoooooo9/agriscan-interactive-web-app-flask-edition)
-[![HuggingFace](https://img.shields.io/badge/HuggingFace-Model%20Hosting-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black)](Jaoooooo9/agriscan-interactive-web-app-flask-edition)
 [![IEEE](https://img.shields.io/badge/IEEE-QPAIN%202026-00629B?style=for-the-badge&logo=ieee&logoColor=white)](https://ieeexplore.ieee.org/abstract/document/11545838)
 
 </div>
@@ -44,11 +43,11 @@ The research presented in this repository has been published in an IEEE internat
 
 AgriScan is available through two independent deployment platforms designed for different user groups. The Streamlit application provides a research-oriented dashboard for visualizing model predictions and exporting results, while the Flask application offers a lightweight mobile interface with browser-based camera capture for field use.
 
-| Application | Purpose | Link |
-|-------------|---------|------|
-| 🎛️ **Streamlit Dashboard** | Research dashboard with bilingual interface, probability visualization, and CSV export | **Open Streamlit App** |
-| 📱 **Flask Web Application** | Web & Mobile-friendly field application with live camera capture | **Open Flask App (https://huggingface.co/spaces/Jaoooooo9/agriscan-interactive-web-app-flask-edition)** |
-| 📄 **IEEE Publication** | Published conference paper describing the comparative study | **DOI: 10.1109/QPAIN69676.2026.11545838 ([https://ieeexplore.ieee.org/abstract/document/11545838))](https://doi.org/10.1109/QPAIN69676.2026.11545838)** |
+| Application | Link |
+| :--- | :--- |
+| 🎛️ **Streamlit Dashboard** | [https://your-streamlit-link.streamlit.app](https://agriscan-deepweeds-deploy.streamlit.app/) |
+| 📱 **Flask Web Application** | [https://huggingface.co/spaces/Jaoooooo9/agriscan-interactive-web-app-flask-edition]([https://huggingface.co/spaces/Jaoooooo9/agriscan-interactive-web-app-flask-edition](https://huggingface.co/spaces/Jaoooooo9/agriscan-interactive-web-app-flask-edition)) |
+| 📄 **IEEE Publication** | [https://ieeexplore.ieee.org/abstract/document/11545838]([https://ieeexplore.ieee.org/abstract/document/11545838) <br><br> [https://doi.org/10.1109/QPAIN69676.2026.11545838](https://doi.org/10.1109/QPAIN69676.2026.11545838](https://ieeexplore.ieee.org/abstract/document/11545838)) |
 
 
 ### 🚀 Try the Live Classifier
