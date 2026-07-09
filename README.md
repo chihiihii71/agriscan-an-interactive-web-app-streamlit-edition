@@ -138,7 +138,7 @@ The research presented in this repository has been published in an IEEE internat
 
 <div align="center">
 
-![AgriScan Research Pipeline](docs/agriscan_system_architecture_1.png)
+![AgriScan Research Pipeline](docs/system_architecture_1.png)
 
 *Figure 1: Schematic overview of the AgriScan deep learning pipeline for DeepWeeds classification and deployment.*
 
@@ -384,11 +384,34 @@ The Streamlit application is intended for researchers, students, agricultural an
 - Responsive dashboard layout
 - Automatic model loading from Hugging Face Hub
 
+
+## ⚙️ System Working Process
+AgriScan uses a decoupled client-server architecture — a Streamlit app offers an alternate interactive web and mobile-friendly dashboard.
+
+### 1. Streamlit Client Interaction & Model Caching
+- **Dual-Language Support:** Sidebar toggle switches the interface between Bengali and English instantly.
+- **Cached Resource Loading:** Model weights and the loaded model are cached separately, avoiding repeated downloads or reloads.
+- **Native Image Upload:** Built-in file uploader accepts JPG/JPEG/PNG, held in memory.
+
+### 2. Preprocessing & Inference Pipeline
+- **Image Normalization:** Same pipeline as Flask — RGB, resize to 256px, center-crop to 224px, tensor conversion, ImageNet normalization.
+- **Inference Execution:** Runs in a no-gradient context; logits pass through Softmax for a full 9-class probability distribution.
+- **Prediction Extraction:** Top class is mapped to its label, with an isolated confidence score for the summary banner.
+
+### 3. Interactive Dashboard Rendering
+- **Top Result Banner:** Displays predicted class and confidence percentage.
+- **Synchronized Image & Chart Layout:** Image is resized to match chart height for a side-by-side layout.
+- **Probability Bar Chart:** Color-scaled bar chart plots all 9 class probabilities with labeled values.
+
+### 4. Detailed Report & Export
+- **Sortable Probability Table:** Expandable table lists all classes sorted by descending probability.
+- **CSV Report Export:** Downloadable CSV named using the predicted class label.
+
 ---
 
 ## 📱 Flask Web Application
 
-The Flask application is designed primarily for practical field use, enabling users to identify weeds directly from smartphones or other mobile devices without installing a dedicated application.
+The Flask application is designed primarily for practical field use, enabling users to identify weeds directly from smartphones or other mobile devices without installing a dedicated web application.
 
 ### Features
 
@@ -400,96 +423,37 @@ The Flask application is designed primarily for practical field use, enabling us
 - Bilingual interface (English / Bangla)
 - Automatic model loading from Hugging Face Hub
 
----
+## ⚙️ System Working Process
 
-# ⚙️ Shared AI Inference Engine On The Dashboards
+AgriScan uses a decoupled client-server architecture — a lightweight Flask backend serves a glassmorphic UI while also exposing a standalone REST API, and a Streamlit app offers an alternate interactive dashboard.
 
-Both deployed applications rely on the same production inference pipeline to ensure identical prediction behaviour across platforms.
+### 1. Frontend Client Interaction & Data Ingestion
+- **Dual-Language Support:** UI switches between English and Bengali via a URL parameter, falling back to English if unsupported.
+- **Flexible Image Capture:** Users upload a file via drag-and-drop/browse, or capture a live photo through the device camera.
+- **Client-to-Server Payload:** Files are sent as multipart form data; camera snapshots are converted to Base64 and sent through a hidden form — no temporary storage needed.
 
-| Stage | Description |
-|--------|-------------|
-| **Model Loading** | Downloads the trained ResNeSt50d model from Hugging Face Hub during application startup. |
-| **Image Preprocessing** | Resizes, crops, converts, and normalizes input images before inference. |
-| **Model Inference** | Performs forward propagation using the trained PyTorch model. |
-| **Probability Estimation** | Applies Softmax to generate confidence scores for all nine classes. |
-| **Prediction Output** | Returns the predicted weed species together with class probabilities for presentation within each application. |
+### 2. Flask Backend & Preprocessing Pipeline
+- **Request Parsing:** Detects whether the payload is a file upload or a Base64 string and decodes it into raw image bytes.
+- **Image Normalization:** Converted to RGB, resized to 256×256, center-crops to 224×224, converted to a tensor, and normalized using ImageNet stats.
 
----
+### 3. Deep Learning Inference Engine
+- **Model Orchestration:** Downloads weights from Hugging Face Hub, loads them into ResNeSt50d, sets eval mode — cached and reused across requests.
+- **Inference Pipeline:** Runs in a no-gradient context to reduce memory use, producing raw logits.
+- **Probability Mapping:** Logits pass through Softmax for a full 9-class probability distribution, plus an isolated top-confidence score.
+- **Taxonomy Extraction:** Highest-probability class is mapped to its localized weed name.
 
-# 🔄 Shared Deployment Workflow
+### 4. Result Generation & Visual Analytics
+- **Dynamic Template Rendering:** Encoded image, probabilities, and labels are passed to the results page.
+- **Interactive Data Visualization:** A responsive donut chart shows the full 9-class probability breakdown.
+- **Centralized Metric Display:** Confidence score is shown at the center of the chart.
 
-Although the Streamlit dashboard and Flask application provide different interfaces, both applications execute the same prediction pipeline.
-
-```text
-User Input
-(Image Upload / Camera Capture)
-              │
-              ▼
-Image Preprocessing
-              │
-              ▼
-Shared ResNeSt50d Model
-              │
-              ▼
-Softmax Probability Calculation
-              │
-              ▼
-Prediction Results
-              │
-      ┌───────┴────────┐
-      ▼                ▼
-Streamlit UI      Flask UI
-```
-
----
-# 🌍 Real-World Applications
-
-Although AgriScan was developed as a comparative deep learning research project, its architecture and deployment strategy make it suitable for practical agricultural applications. By combining high-accuracy image classification with accessible web interfaces, the system demonstrates how modern artificial intelligence can assist farmers, researchers, and agricultural organizations in improving weed management and decision-making.
-
-Potential application areas include:
-
-- Precision agriculture and smart farming
-- Early detection of invasive weed species
-- Crop monitoring and field inspection
-- Mobile-assisted weed identification
-- Future drone-based agricultural monitoring
-- Agricultural AI research and education
-- Teaching computer vision and deep learning concepts
-- Environmental and ecological monitoring
-
----
+### 5. REST API Execution Loop
+- **Isolated Endpoint:** External systems can call a dedicated prediction endpoint, bypassing the browser UI.
+- **Flexible Payloads:** Accepts multipart file uploads or JSON with a Base64 image — same input paths as the web UI.
+- **Standardized JSON Response:** Returns status, language, prediction, confidence, and full probability breakdown.
+- **Error Handling:** Returns `400` if no image is provided, `500` on decoding or inference failure.
 
 
-# 🚀 Future Work
-
-Several extensions can further improve the capabilities of AgriScan.
-
-### Model Improvements
-
-- Train on larger and more diverse agricultural datasets.
-- Investigate newer Vision Transformer architectures.
-- Explore ensemble learning between CNN and Transformer models.
-- Apply model compression and quantization for faster inference.
-
----
-
-### Application Improvements
-
-- Native Android and iOS applications.
-- Offline inference for remote agricultural environments.
-- Cloud-based REST API for third-party integration.
-- Multi-image batch prediction.
-- User account management and prediction history.
-
----
-
-### Research Directions
-
-- Weed detection using object detection frameworks.
-- Semantic segmentation for dense weed localization.
-- Multi-label agricultural disease classification.
-- Drone and UAV image analysis.
-- Continual learning for newly emerging weed species.
 
 ---
 
@@ -504,7 +468,7 @@ AgriScan combines modern deep learning frameworks, web technologies, and cloud d
 
 | Category | Technology |
 |----------|------------|
-| **Programming Language** | Python, CSS |
+| **Programming Language** | Python, HTML, CSS |
 | **Framework** | Streamlit |
 | **Inference Engine** | PyTorch |
 | **Model Library** | TIMM |
@@ -542,6 +506,58 @@ AgriScan combines modern deep learning frameworks, web technologies, and cloud d
 | **Hugging Face Spaces** | Flask application deployment |
 | **Streamlit Community Cloud** | Dashboard deployment |
 | **GitHub** | Source code management |
+
+---
+
+# 🌍 Real-World Applications
+
+Although AgriScan was developed as a comparative deep learning research project, its architecture and deployment strategy make it suitable for practical agricultural applications. By combining high-accuracy image classification with accessible web interfaces, the system demonstrates how modern artificial intelligence can assist farmers, researchers, and agricultural organizations in improving weed management and decision-making.
+
+Potential application areas include:
+
+- Precision agriculture and smart farming
+- Early detection of invasive weed species
+- Crop monitoring and field inspection
+- Mobile-assisted weed identification
+- Future drone-based agricultural monitoring
+- Agricultural AI research and education
+- Teaching computer vision and deep learning concepts
+- Environmental and ecological monitoring
+
+---
+
+
+# 🚀 Future Work
+
+Several extensions can further enhance AgriScan's capabilities.
+
+### Model Improvements
+
+- Train on larger and more diverse agricultural datasets.
+- Investigate newer Vision Transformer architectures.
+- Explore ensemble learning between CNN and Transformer models.
+- Apply model compression and quantization for faster inference.
+
+---
+
+### Application Improvements
+
+- Native Android and iOS applications.
+- Offline inference for remote agricultural environments.
+- Cloud-based REST API for third-party integration.
+- Multi-image batch prediction.
+- User account management and prediction history.
+
+---
+
+### Research Directions
+
+- Weed detection using object detection frameworks.
+- Semantic segmentation for dense weed localization.
+- Multi-label agricultural disease classification.
+- Drone and UAV image analysis.
+- Continual learning for newly emerging weed species.
+
 
 ---
 
@@ -629,38 +645,41 @@ python app.py
 
 ---
 
-# 📂 Project Structure
-
+## 📂 Project Structure
 
 ```text
-agriscan-deepweeds/
-
+AgriScan/
+│
+├── 📁 .devcontainer/
+│   └── devcontainer.json
+│
+├── 📁 docs/
+│   ├── agriscan_interface.png
+│   ├── paper_certificate.png
+│   ├── system_architecture_1.png
+│   └── system_architecture_2.png
+│
+├── 📁 flask_app/
+│   ├── static/
+│   │   └── style.css
+│   ├── templates/
+│   │   ├── index.html
+│   │   └── result.html
+│   ├── Dockerfile
+│   ├── app.py
+│   └── requirements.txt
+│
+├── 📁 research/
+│   ├── finetuning_resnest50d_vit_dino.ipynb
+│   ├── model_training_finetuning_restnet50d_ecaresnet50_vitdino.ipynb
+│   └── model_training_resnet50cbam_resnet50vit.ipynb
 │
 ├── 📁 streamlit_app/
 │   └── app.py
 │
-├── 📁 flask_app/
-│   ├── app.py
-│   ├── templates/
-│   │      ├── index.html
-│   │      └── result.html
-│   │
-│   └── static/
-│          └── style.css
-│
-├── 📁 research/
-│   ├── grad-cam.ipynb
-│   ├── model_training.ipynb
-│   └── evaluation.ipynb
-│
-├── 📁 docs/
-│   ├── agriscan_research_pipeline.png
-│   ├── agriscan_deployment_architecture.png
-│   └── screenshots/
-│
+├── .gitignore
 ├── README.md
-│
-├── requirements.txt
+└── requirements.txt
 ```
 
 ---
@@ -693,6 +712,7 @@ If you use this repository, the trained models, or the accompanying methodology 
 | **Mahia Mehrun Safa** | Manuscript writing, research assistance, documentation. |
 | **K. M. Safin Kamal** | Research supervision, technical guidance, manuscript review. |
 | **Ahmed Wasif Reza** | Research supervision, project oversight. |
+
 ---
 
 
@@ -705,11 +725,5 @@ If you use this repository, the trained models, or the accompanying methodology 
 If you found AgriScan useful for your research, coursework, or agricultural applications, please consider giving this repository a **⭐ Star** on GitHub.
 
 Your support helps improve the visibility of open-source research and encourages future development.
-
-</div>
-
----
-
-**Built with ❤️ using PyTorch, TIMM, Streamlit, Flask, and Hugging Face.**
 
 </div>
