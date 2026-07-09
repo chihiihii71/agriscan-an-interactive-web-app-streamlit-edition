@@ -7,9 +7,13 @@
 *A research-driven deep learning system for automated invasive weed classification using comparative CNN and Vision Transformer architectures.*
 
 
-[![Streamlit](https://img.shields.io/badge/Streamlit-Web%20Dashboard-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://agriscan-deepweeds-deploy.streamlit.app/)
-[![Flask](https://img.shields.io/badge/Flask-Web%20Application-000000?style=for-the-badge&logo=flask&logoColor=white)](https://huggingface.co/spaces/Jaoooooo9/agriscan-interactive-web-app-flask-edition)
+<div align="center">
+
 [![IEEE](https://img.shields.io/badge/IEEE-QPAIN%202026-00629B?style=for-the-badge&logo=ieee&logoColor=white)](https://ieeexplore.ieee.org/abstract/document/11545838)
+[![Web Dashboard](https://img.shields.io/badge/Web%20Dashboard-Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://agriscan-deepweeds-deploy.streamlit.app/)
+[![Web Application](https://img.shields.io/badge/Web%20Application-Flask-000000?style=for-the-badge&logo=flask&logoColor=white)](https://huggingface.co/spaces/Jaoooooo9/agriscan-interactive-web-app-flask-edition)
+
+</div>
 
 </div>
 
@@ -174,8 +178,6 @@ The complete end-to-end pipeline followed throughout this study is structured as
   doi = {10.1038/s41598-018-38343-3}
 }
 ```
-
-The models developed in this project were trained and evaluated using the **DeepWeeds** dataset, a widely recognized benchmark for invasive weed classification. DeepWeeds contains real field photographs captured under varying environmental conditions, allowing the models to learn robust visual representations that generalize more effectively to practical agricultural scenarios.
 
 ---
 
