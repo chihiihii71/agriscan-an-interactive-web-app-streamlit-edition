@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AgriScan - Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+</head>
+<body>
+    <div class="glass-container" style="max-width: 900px;">
+        <h1 style="text-align: center;">{{ text.predicted }}: <span style="color:#2ecc71;">{{ prediction }}</span></h1>
+        <p style="text-align: center; font-size: 1.2em;">{{ text.confidence }}: <strong>{{ confidence }}%</strong></p>
+        
+        <div class="dashboard-grid">
+            <div class="grid-item">
+                <img src="data:image/jpeg;base64,{{ img_data }}" alt="Uploaded Image" style="width: 100%; border-radius: 10px;">
+            </div>
+            <div class="grid-item" id="donut-chart"></div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="/?lang={{ lang }}" class="btn btn-primary">Scan Another Image</a>
+        </div>
+    </div>
+
+    <script>
+        var classes = {{ class_names | tojson }};
+        var probs = {{ all_probs | tojson }};
+
+        // Custom Donut Chart (Different from Streamlit's Bar Chart)
+        var data = [{
+            values: probs,
+            labels: classes,
+            type: 'pie',
+            hole: 0.6,
+            textinfo: 'none',
+            hoverinfo: 'label+percent',
+            marker: { colors: ['#1e4620', '#2ecc71', '#a7f3d0', '#81c784', '#aed581', '#dce775', '#fff59d', '#ffb74d', '#e57373'] }
+        }];
+
+        var layout = {
+            margin: { t: 20, b: 20, l: 20, r: 20 },
+            showlegend: true,
+            legend: { orientation: "v", x: 1, y: 0.5 },
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            annotations: [{
+                font: { size: 20, color: '#1e4620', weight: 'bold' },
+                showarrow: false,
+                text: '{{ confidence }}%',
+                x: 0.5, y: 0.5
+            }]
+        };
+
+        Plotly.newPlot('donut-chart', data, layout, {displayModeBar: false, responsive: true});
+    </script>
+</body>
+</html>

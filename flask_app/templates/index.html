@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AgriScan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="glass-container">
+        <h1>{{ text.title }}</h1>
+        <p>{{ text.subtitle }}</p>
+        
+        <div class="lang-toggle">
+            <a href="/?lang=en">English</a> | <a href="/?lang=bn">বাংলা</a>
+        </div>
+
+        <form action="/" method="post" enctype="multipart/form-data" id="uploadForm">
+            <input type="hidden" name="lang" value="{{ lang }}">
+            <input type="hidden" name="camera_image" id="camera_image">
+            
+            <div class="drop-zone" id="drop-zone">
+                <span class="drop-text" id="drop-text">Drag & Drop Image Here<br>or Click to Browse</span>
+                <input type="file" name="file" id="fileInput" accept="image/*" hidden>
+                <img id="imagePreview" src="" alt="Preview" style="display: none; max-width: 100%; border-radius: 10px;">
+            </div>
+
+            <video id="video" autoplay playsinline style="display:none; width:100%; border-radius: 10px; margin-top: 15px;"></video>
+            <canvas id="canvas" style="display:none;"></canvas>
+
+            <div class="btn-group">
+                <button type="button" class="btn btn-secondary" onclick="startCamera()">📷 Open Camera</button>
+                <button type="button" class="btn btn-secondary" id="snapBtn" style="display:none;" onclick="takeSnapshot()">📸 Take Photo</button>
+                <button type="submit" class="btn btn-primary" id="submitBtn">{{ text.upload }}</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('fileInput');
+        const imagePreview = document.getElementById('imagePreview');
+        const dropText = document.getElementById('drop-text');
+
+        // Drag and drop mechanics
+        dropZone.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', previewImage);
+        dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.style.borderColor = '#2ecc71'; });
+        dropZone.addEventListener('dragleave', () => dropZone.style.borderColor = '#1e4620');
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileInput.files = e.dataTransfer.files;
+            previewImage();
+        });
+
+        function previewImage() {
+            const file = fileInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                    dropText.style.display = 'none';
+                    document.getElementById('video').style.display = 'none'; // hide camera if open
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Camera Logic
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const cameraInput = document.getElementById('camera_image');
+
+        async function startCamera() {
+            imagePreview.style.display = 'none';
+            dropText.style.display = 'none';
+            video.style.display = 'block';
+            document.getElementById('snapBtn').style.display = 'inline-block';
+            
+            const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+            video.srcObject = stream;
+        }
+
+        function takeSnapshot() {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0);
+            cameraInput.value = canvas.toDataURL('image/jpeg'); // Save base64 to hidden input
+            
+            // Stop camera stream
+            video.srcObject.getTracks().forEach(track => track.stop());
+            video.style.display = 'none';
+            document.getElementById('snapBtn').style.display = 'none';
+            
+            imagePreview.src = cameraInput.value;
+            imagePreview.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
