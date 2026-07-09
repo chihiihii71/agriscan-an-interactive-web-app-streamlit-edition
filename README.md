@@ -45,20 +45,19 @@ The research presented in this repository has been published in an IEEE internat
 
 # 🔗 Live Demo
 
-AgriScan is available through two independent deployment platforms designed for different user groups. The Streamlit application provides a research-oriented dashboard for visualizing model predictions and exporting results, while the Flask application offers a lightweight mobile interface with browser-based camera capture for field use.
 
-| Application | Link |
+| Application | Access |
 | :--- | :--- |
-| 🎛️ **Streamlit Dashboard** | [https://your-streamlit-link.streamlit.app](https://agriscan-deepweeds-deploy.streamlit.app/) |
-| 📱 **Flask Web Application** | [https://huggingface.co/spaces/Jaoooooo9/agriscan-interactive-web-app-flask-edition]([https://huggingface.co/spaces/Jaoooooo9/agriscan-interactive-web-app-flask-edition](https://huggingface.co/spaces/Jaoooooo9/agriscan-interactive-web-app-flask-edition)) |
-| 📄 **IEEE Publication** | [https://ieeexplore.ieee.org/abstract/document/11545838]([https://ieeexplore.ieee.org/abstract/document/11545838) <br><br> [https://doi.org/10.1109/QPAIN69676.2026.11545838](https://doi.org/10.1109/QPAIN69676.2026.11545838](https://ieeexplore.ieee.org/abstract/document/11545838)) |
+| 🎛️ **Streamlit Dashboard** | [Launch Dashboard](https://agriscan-deepweeds-deploy.streamlit.app/) |
+| 📱 **Flask Web Application** | [Open Web Application](https://huggingface.co/spaces/Jaoooooo9/agriscan-interactive-web-app-flask-edition) |
+| 📄 **IEEE Publication** | [IEEE Xplore](https://ieeexplore.ieee.org/abstract/document/11545838) • [DOI](https://doi.org/10.1109/QPAIN69676.2026.11545838) |
 
 
 ### 🚀 Try the Live Classifier
 
 <div align="center">
 
-[![AgriScan Interface](docs/agriscan_interface.png)]([https://bourneit-health-triage-engine.vercel.app/](https://huggingface.co/spaces/Jaoooooo9/agriscan-interactive-web-app-flask-edition))
+[![AgriScan Interface](docs/agriscan_interface.png)](https://agriscan-deepweeds-deploy.streamlit.app/)
 
 </div>
 
@@ -231,12 +230,6 @@ Before model training, all images were processed using a consistent preprocessin
 - Color jitter
 - Image resizing
 
----
-
-## Experimental Protocol
-
-
-
 
 ---
 
@@ -267,7 +260,7 @@ The table below summarizes the overall performance achieved by each architecture
 | ResNet50ViT | CNN + Vision Transformer Hybrid | 93.00% | 90.0% | 91.0% | 90.0% |
 | ResNet50 + CBAM | CNN (Attention Module) | 87.00% | 80.0% | 90.0% | 84.0% |
 
----
+
 ---
 
 # 🧬 Detailed Model Configuration
@@ -352,7 +345,7 @@ The experimental evaluation demonstrates that the proposed comparative framework
 
 <div align="center">
 
-![AgriScan Deployment Architecture](docs/agriscan_deployment_architecture.png)
+![AgriScan Deployment Architecture](docs/system_architecture_2.png)
 
 **Figure 2.** Shared deployment architecture illustrating how both web applications utilize the same trained ResNeSt50d inference engine while providing different user experiences.
 
@@ -373,8 +366,6 @@ The trained model is hosted on **Hugging Face Hub**, allowing both applications 
 # 💻 Deployed Applications
 
 AgriScan provides two independent applications designed for different user groups while sharing the same AI inference engine.
-
----
 
 ## 🎛️ Streamlit Dashboard
 
@@ -637,7 +628,6 @@ python app.py
 
 # 📂 Project Structure
 
-The repository is organized into separate research and deployment components to simplify development and maintenance.
 
 ```text
 agriscan-deepweeds/
@@ -672,48 +662,34 @@ agriscan-deepweeds/
 
 ---
 
-# 📄 Publication
-
-The research presented in this repository has been published in an IEEE international conference.
-
-> **Vision Transformers for Image Classification with Self-Supervised Pretraining: A Comparative Study on DeepWeeds**
-
-**Conference**
-
-IEEE QPAIN 2026
-
-**DOI**
-
-```text
-10.1109/QPAIN69676.2026.11545838
-```
-
-The publication provides a detailed discussion of the experimental methodology, comparative analysis, and evaluation results that form the foundation of the AgriScan system.
-
----
 
 # 📚 Citation
 
 If you use this repository, the trained models, or the accompanying methodology in your research, please cite our work.
 
 ```bibtex
-@inproceedings{YOUR_CITATION_HERE,
-  title={Vision Transformers for Image Classification with Self-Supervised Pretraining: A Comparative Study on DeepWeeds},
-  author={...},
-  booktitle={IEEE QPAIN},
+@INPROCEEDINGS{11545838,
+  author={Nahar, Kamrun and Abir, Shakib Ibna Sorowar and Safa, Mahia Mehrun and Kamal, K. M. Safin and Reza, Ahmed Wasif},
+  booktitle={2026 IEEE 2nd International Conference on Quantum Photonics, Artificial Intelligence & Networking (QPAIN)}, 
+  title={DeepWeeds: Vision Transformers for Image Classification with Self-Supervised Pretraining}, 
   year={2026},
-  doi={10.1109/QPAIN69676.2026.11545838}
-}
+  volume={},
+  number={},
+  pages={1-6},
+  keywords={Modeling;Accuracy;Deep learning;Industrial plants;Plants (biology);Printing;Labeling;Measurement;Convolutional neural networks;Training;DeepWeeds;Vision Transformers;ResNeSt50d;ECAResNet50d;ViT Base Patch16 224 Dino Model;Accuracy;F1-Score;ROC curve;Grad-CAM},
+  doi={10.1109/QPAIN69676.2026.11545838}}
 ```
 
 
 # 👨‍💻 Authors
 
-| Name | Contribution |
-|------|--------------|
-| **Your Name** | Research, model development, deployment, documentation |
-| **Co-author(s)** | Research supervision / collaboration *(if applicable)* |
-
+| Author | Primary Contribution |
+|:-------|:---------------------|
+| **Kamrun Nahar** | Research, model development, implementation, experimentation, deployment, documentation. |
+| **Shakib Ibna Sorowar Abir** | Manuscript writing, research assistance. |
+| **Mahia Mehrun Safa** | Manuscript writing, research assistance, documentation. |
+| **K. M. Safin Kamal** | Research supervision, technical guidance, manuscript review. |
+| **Ahmed Wasif Reza** | Research supervision, project oversight. |
 ---
 
 # 🙏 Acknowledgements
